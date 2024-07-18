@@ -15,6 +15,7 @@ using std::cout;
 using std::string;
 using std::count;
 using std::count_if;
+using std::all_of;
 
 
 
@@ -121,7 +122,11 @@ int counting_and_finding()
 
     cout << "odds if approach1 : " << odds << "\n";
 
-    odds = std::ranges::count_if(v, [](auto elem){return  elem % 2 != 0; });
+    odds = std::ranges::count_if(
+        v,
+        [](auto elem)
+        {return  elem % 2 != 0; }
+        );
 
     cout << "odds if approach2 : " << odds << "\n";
 
@@ -144,9 +149,78 @@ int counting_and_finding()
         begin(month_lengths),
         end(month_lengths),
         [](auto elem)
-        {return elem.second == 31;});
+        {return elem.second == 31;}
+        );
+
 
     cout << "count if map : " << long_months << "\n";
 
+
+    // are all, any or more or none of the values odd? (conclude from number of odd entries)
+
+    bool allof, noneof, anyof;
+
+    allof = (odds == v.size());
+    noneof = (odds == 0);
+    anyof = (odds > 0);
+
+    /**
+     * Allof
+     */
+
+    allof = all_of(
+        begin(v),
+        end(v),
+        [](auto elem){return elem % 2 != 0;}
+        );
+
+    cout << "all_of v1: : " << allof << "\n";
+
+
+    allof = std::ranges::all_of(
+        v, [](auto elem)
+        {return elem % 2 !=0;}
+        );
+
+    cout << "all_of v2: " << allof << "\n";
+
+    /**
+     * None of
+     */
+
+    noneof = none_of(
+        begin(v),
+        end(v),
+        [](auto elem)
+        {return  elem % 2!= 0;}
+        );
+
+    cout << "non_of v1: " << noneof << "\n";
+
+    noneof = std::ranges::none_of(
+        v,
+        [](auto elem){return  elem %2 !=0;}
+        );
+
+    cout << "non_of v2: " << noneof << "\n";
+
+    /**
+     * Anyof
+     */
+
+    anyof = any_of(
+        begin(v),
+        end(v),
+        [](auto elem){return elem % 2 != 0;}
+        );
+
+    cout << "any_of v1: " << anyof << "\n";
+
+    anyof = std::ranges::any_of(
+        v,
+        [](auto elem){return elem %2 !=0;}
+        );
+
+    cout << "any_of v2: " << anyof << "\n";
     return 0;
 }
